@@ -1,0 +1,33 @@
+* {
+    padding: 0; margin: 0;
+}
+.title{
+    text-align: center;
+    padding-bottom: 20Px;
+    padding-top: 20Px;
+}
+canvas {
+    background: #fea347;
+    display: block;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+#status {
+    text-align: center;
+}
+#start {
+    text-align: center;
+    width: 100px;
+    height: 50px;
+    background-color: #98FB98;
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+#main{
+   display: block;
+}
+

@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tp Numero3</title>
+    <meta charset="utf-8"/>
+    <script type="text/javascript" src="utils.js"></script>
+    <script type="text/javascript" src="class/Person.js"></script>
+    <script type="text/javascript" src="class/Food.js"></script>
+    <script type="text/javascript" src="class/Weapon.js"></script>
+    <script type="text/javascript" src="class/Shield.js"></script>
+    <script type="text/javascript" src="index.js"></script>
+    <link rel="stylesheet" href="style.css">
+
+
+</head>
+<body>
+<div id="main">
+    <h1 class= "title">Mini jeu entre un Héro et un Monstre</h1>
+    <canvas id="myCanvas" width="500" height="500" style=" border:2px solid black;"></canvas>
+    <div id="cde_hero">
+      <p> Déplacer votre Héro</p>
+        <button id="btn_gauche_hero">&#9668;</button>
+        <button id="btn_droite_hero">&#9658;</button>
+        <button id="btn_haut_hero">&#9650;</button>
+        <button id="btn_bas_hero">&#9660;</button>
+    </div>
+    <div id="cde_monster">
+        <p> Déplacer votre Monster</p>
+        <button id="btn_gauche_monster">&#9668;</button>
+        <button id="btn_droite_monster">&#9658;</button>
+        <button id="btn_haut_monster">&#9650;</button>
+        <button id="btn_bas_monster">&#9660;</button>
+    </div>
+</div>
+
+
+<button type ="button" onClick="main()" id="start">
+    Start
+</button>
+<script>
+    (function(){
+        let canvas = document.getElementById('myCanvas'),
+            context = canvas.getContext('2d'),
+            scaleY = 1.0, scaleX = 1.0,
+            offsetX = 0, offsetY = 0, incX = 50, incY = 50,
+            oImageHero = new Image();
+
+        function drawImage(imageObj){
+            let imageLarg = imageObj.width,
+                imageHaut = imageObj.height,
+                // centre du canvas
+                centreX = (canvas.width  /2) -offsetX,
+                centreY = (canvas.height /2) -offsetY;
+            // efface l'espace
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            // sauvegarde context
+            context.save();
+            // translation du context au centre du canvas
+            context.translate( centreX, centreY);
+            // applique le facteur d'échelle
+            context.scale( scaleX, scaleY);
+            // affiche image
+            context.drawImage( imageObj, -imageLarg/2, -imageHaut/2);
+            // restaure context
+            context.restore();
+        }
+        function drawLines() {
+            let x = 0;
+            let y = 0;
+            for (let i = 0; i < 10; i++) {
+                offsetX = offsetX + 50;
+                offsetY = offsetY + 50;
+                context.strokeRect(0, y, 500, 1);
+                context.strokeRect(x, 0, 1, 500);
+                context.strokeStyle = 'rgb(0, 0, 0)';
+            }
+        }
+
+        oImageHero.onload = function() {
+            drawImage(this);
+
+            let obj = this,
+
+                oBtn = document.getElementById('btn_gauche_hero');
+            oBtn.onclick= function(){
+                offsetX += incX;
+                if (offsetX < 0) {
+                    offsetX = 0;
+                }
+                drawImage(obj);
+            };
+            oBtn = document.getElementById('btn_droite_hero');
+            oBtn.onclick= function(){
+                offsetX -= incX;
+                if (offsetX + obj.width > canvas.width) {
+                    offsetX = canvas.width - obj.width;
+                }
+
+                drawImage(obj);
+            };
+            oBtn = document.getElementById('btn_haut_hero');
+            oBtn.onclick= function(){
+                offsetY += incY;
+                if (offsetY + obj.height > canvas.height) {
+                    offsetY = canvas.height - obj.height;
+                }
+
+                drawImage(obj);
+            };
+            oBtn = document.getElementById('btn_bas_hero');
+            oBtn.onclick= function(){
+                offsetY -= incY;
+                if (offsetY < 0) {
+                    offsetY = 0;
+                }
+                drawImage(obj);
+            };
+        };
+        oImageHero.src = 'img/hero.png';
+    })();
+
+</script>
+
+</body>
+</html>
+
+
